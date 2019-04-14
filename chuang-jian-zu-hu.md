@@ -64,10 +64,21 @@ class CreateTenant extends Command
 }
 ```
 
-缺少 Customer model  自己创建model 
+缺少 Customer model  自己创建model
 
 ```
 php artisan make:model Customer
+```
+
+为主机名的FQDN分配基本URL
+
+```
+// add a new new key in config/app.php:
+    'url_base' => env('APP_URL_BASE', 'http://localhost'),
+    
+// modify your .env file:
+    APP_URL_BASE=townhouse.dev
+    APP_URL=http://${APP_URL_BASE}
 ```
 
 
