@@ -34,7 +34,7 @@ DB_PASSWORD=123456
 LIMIT_UUID_LENGTH_32=true
 ```
 
-下载  hyn 
+下载  hyn
 
 ```
 composer require "hyn/multi-tenant:5.4.*"
@@ -59,6 +59,19 @@ php artisan vendor:publish --tag=tenancy
 ```
 php artisan migrate --database=system
 ```
+
+执行过程中报错与解决方案
+
+    报错： Syntax error or access violation: 1071 Specified key was too long; max key length is 1000 bytes (SQL: alter table `hostnames` add uniq
+    ue `hostnames_fqdn_unique`(`fqdn`))
+    解决方案
+    app/Providers/AppServiceProvider.php
+        use Illuminate\Support\Facades\Schema;
+        public function boot()
+        {
+            Schema::defaultStringLength(191);
+        }
+
 
 ## 题外话
 
