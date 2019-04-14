@@ -1,3 +1,4 @@
-# My Awesome API
+# multi-tenant - 多租户
 
-This file file serves as your book's preface, a great place to describe your book's content and ideas.
+使用[laravel](https://laravel.com/docs/5.8) + [laravel-tenancy](https://laravel-tenancy.com/docs/hyn/5.4) 实现多租户；照猫画虎，成否在此一举
+
