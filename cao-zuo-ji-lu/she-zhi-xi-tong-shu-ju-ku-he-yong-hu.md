@@ -21,6 +21,26 @@
 ],
 ```
 
+_.env  添加数据库基本连接_
+
+```
+
+DB_CONNECTION=system
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=townhousedb
+DB_USERNAME=root
+DB_PASSWORD=123456
+//将多租户包生成的UUID长度限制在32个字符以下
+LIMIT_UUID_LENGTH_32=true
+```
+
+
+
+
+
+
+
 ## 题外话
 
 MacOS 数据库管理工具  [https://www.sequelpro.com/](https://www.sequelpro.com/)
