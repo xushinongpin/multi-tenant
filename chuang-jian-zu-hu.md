@@ -64,5 +64,11 @@ class CreateTenant extends Command
 }
 ```
 
+缺少 Customer model  自己创建model 
+
+```
+php artisan make:model Customer
+```
+
 
 
