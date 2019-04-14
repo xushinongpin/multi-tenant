@@ -1,4 +1,4 @@
-php artisan make:command CreateTenant
+php artisan make:command CreateTenant 【生产位置 app/Console/Commands/CreateTenant.php】
 
 ```
 <?php
