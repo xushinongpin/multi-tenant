@@ -1,6 +1,12 @@
-创建  新用户 -  townhouseadmin   密码 - secret  权限- root 全部权限
+创建  新用户 -  townhouseadmin   密码 - secret  权限- root 全部权限 【 可以直接给root使用 】
 
-修改名称 config/database.php:16 system 改为 mysql
+修改名称 config/database.php:16 mysql 改为  system
+
+添加数据库连接 config/database.php:34
+
+
+
+
 
 ## 题外话
 
