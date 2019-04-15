@@ -87,7 +87,7 @@ TENANCY_DATABASE_AUTO_DELETE_USER=true
 执行删除命令
 
 ```
-php artisan tenant:delete 你要删的
+php artisan tenant:delete 你要删的用户
 ```
 
 
