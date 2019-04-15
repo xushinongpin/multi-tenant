@@ -60,8 +60,6 @@ class CreateTenant extends Command
 }
 ```
 
-
-
 为主机名的FQDN分配基本URL
 
 ```
@@ -71,6 +69,12 @@ class CreateTenant extends Command
 // modify your .env file:
     APP_URL_BASE=townhouse.dev
     APP_URL=http://${APP_URL_BASE}
+```
+
+使用提供的名称和电子邮件地址创建租户
+
+```
+e.g. php artisan tenant:create john john@example.com cafejohn
 ```
 
 
