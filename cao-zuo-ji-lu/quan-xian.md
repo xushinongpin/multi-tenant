@@ -134,7 +134,7 @@ class User extends Authenticatable
 然后执行生产命令
 
 ```
-php artisan tenant:create zlc zlc@lvtian.vip zlc -v
+php artisan tenant:create zlc zlc@lvtian.vip zlc
 //删除命令
 php artisan tenant:delete zlc
 ```
