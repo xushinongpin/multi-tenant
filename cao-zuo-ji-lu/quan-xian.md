@@ -120,7 +120,6 @@ class User extends Authenticatable
 修改权限设置代码 【 app/Console/Commands/CreateTenant.php:53 】
 
 ```
-
     private function addAdmin($name, $email, $password)
     {
         $admin = User::create(['name' => $name, 'email' => $email, 'password' => Hash::make($password)]);
@@ -128,6 +127,16 @@ class User extends Authenticatable
         $admin->assignRole('admin');
         return $admin;
     }
+```
+
+将 database\migrations\2019\_04\_15\_163057\_create\_permission\_tables.php 迁移到 database\migrations\tenant\2019\_04\_15\_163057\_create\_permission\_tables.php
+
+然后执行生产命令
+
+```
+php artisan tenant:create zlc zlc@lvtian.vip zlc -v
+//删除命令
+php artisan tenant:delete zlc
 ```
 
 
