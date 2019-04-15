@@ -40,7 +40,7 @@ class DeleteTenant extends Command
 }
 ```
 
-否在那时删除数据库或数据库用户
+删除前发布资产
 
 ```
 php artisan vendor:publish
@@ -82,6 +82,12 @@ config/tenancy.php 配置
 TENANCY_DIRECTORY_AUTO_DELETE=true
 TENANCY_DATABASE_AUTO_DELETE=true
 TENANCY_DATABASE_AUTO_DELETE_USER=true
+```
+
+执行删除命令
+
+```
+php artisan tenant:delete 你要删的
 ```
 
 
