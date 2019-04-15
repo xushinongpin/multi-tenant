@@ -4,57 +4,53 @@ php artisan make:command CreateTenant 【生产位置 app/Console/Commands/Creat
 <?php
 namespace App\Console\Commands;
 use App\User;
-use Hyn\Tenancy\Contracts\Repositories\CustomerRepository;
 use Hyn\Tenancy\Contracts\Repositories\HostnameRepository;
 use Hyn\Tenancy\Contracts\Repositories\WebsiteRepository;
 use Hyn\Tenancy\Environment;
-use Hyn\Tenancy\Models\Customer;
 use Hyn\Tenancy\Models\Hostname;
 use Hyn\Tenancy\Models\Website;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
+
 class CreateTenant extends Command
 {
-    protected $signature = 'tenant:create {name} {email}';
-    protected $description = 'Creates a tenant with the provided name and email address e.g. php artisan tenant:create boise boise@example.com';
+    protected $signature = 'tenant:create {name} {email} {tenantname}';
+    protected $description = 'Creates a tenant with the provided name and email address e.g. php artisan tenant:create john john@example.com cafejohn';
     public function handle()
     {
         $name = $this->argument('name');
         $email = $this->argument('email');
-        if ($this->tenantExists($name, $email)) {
-            $this->error("A tenant with name '{$name}' and/or '{$email}' already exists.");
+        $tenantname = $this->argument('tenantname');
+        if ($this->tenantExists($tenantname)) {
+            $this->error("A tenant with name '{$tenantname}' already exists.");
             return;
         }
-        $hostname = $this->registerTenant($name, $email);
-        app(Environment::class)->hostname($hostname);
+        $tenant = $this->registerTenant($name, $email, $tenantname);
+        app(Environment::class)->tenant($tenant["website"]);
+
         // we'll create a random secure password for our to-be admin
         $password = str_random();
         $this->addAdmin($name, $email, $password);
-        $this->info("Tenant '{$name}' is created and is now accessible at {$hostname->fqdn}");
+        $this->info("Tenant '{$tenantname}' is created and is now accessible at {$tenant["hostname"]->fqdn}");
         $this->info("Admin {$email} can log in using password {$password}");
     }
-    private function tenantExists($name, $email)
+    private function tenantExists($tenantname)
     {
-        return Customer::where('name', $name)->orWhere('email', $email)->exists();
+        $baseUrl = config('app.url_base');
+        $fqdn = "{$tenantname}.{$baseUrl}";
+        return Hostname::where('fqdn', $fqdn)->exists();
     }
-    private function registerTenant($name, $email)
+    private function registerTenant($name, $email, $tenantname)
     {
-        // create a customer
-        $customer = new Customer;
-        $customer->name = $name;
-        $customer->email = $email;
-        app(CustomerRepository::class)->create($customer);
-        // associate the customer with a website
+        // create a website
         $website = new Website;
-        $website->customer()->associate($customer);
         app(WebsiteRepository::class)->create($website);
         // associate the website with a hostname
         $hostname = new Hostname;
         $baseUrl = config('app.url_base');
-        $hostname->fqdn = "{$name}.{$baseUrl}";
-        $hostname->customer()->associate($customer);
+        $hostname->fqdn = "{$tenantname}.{$baseUrl}";
         app(HostnameRepository::class)->attach($hostname, $website);
-        return $hostname;
+        return ["hostname"=>$hostname, "website"=>$website];
     }
     private function addAdmin($name, $email, $password)
     {
@@ -64,11 +60,7 @@ class CreateTenant extends Command
 }
 ```
 
-缺少 Customer model  自己创建model
 
-```
-php artisan make:model Customer
-```
 
 为主机名的FQDN分配基本URL
 
