@@ -117,5 +117,18 @@ class User extends Authenticatable
 }
 ```
 
+修改权限设置代码 【 app/Console/Commands/CreateTenant.php:53 】
+
+```
+
+    private function addAdmin($name, $email, $password)
+    {
+        $admin = User::create(['name' => $name, 'email' => $email, 'password' => Hash::make($password)]);
+        $admin->guard_name = 'web';
+        $admin->assignRole('admin');
+        return $admin;
+    }
+```
+
 
 
