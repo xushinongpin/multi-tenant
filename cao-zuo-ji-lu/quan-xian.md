@@ -44,5 +44,18 @@ php artisan make:model Permission
 php artisan make:model Role
 ```
 
+修改 app/Permission.php
+
+```
+<?php
+namespace App;
+use Hyn\Tenancy\Traits\UsesTenantConnection;
+use Spatie\Permission\Models\Permission as BasePermission;
+class Permission extends BasePermission
+{
+    use UsesTenantConnection;
+}
+```
+
 
 
