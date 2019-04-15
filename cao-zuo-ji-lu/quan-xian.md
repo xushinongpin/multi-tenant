@@ -33,28 +33,39 @@ php artisan vendor:publish
 修改 config/permission.php
 
 ```
-'permission' => Spatie\Permission\Models\Permission::class, 改为  'permission' => App\Permission::class,
-'role' => Spatie\Permission\Models\Role::class, 改为 'role' => App\Role::class,
+    'permission' => Spatie\Permission\Models\Permission::class, 改为  'permission' => App\Permission::class,
+    'role' => Spatie\Permission\Models\Role::class, 改为 'role' => App\Role::class,
 ```
 
 生产model
 
 ```
-php artisan make:model Permission
-php artisan make:model Role
+    php artisan make:model Permission
+    php artisan make:model Role
 ```
 
-修改 app/Permission.php
+修改 app/Permission.php 与 app/Role.php
 
 ```
 <?php
-namespace App;
-use Hyn\Tenancy\Traits\UsesTenantConnection;
-use Spatie\Permission\Models\Permission as BasePermission;
-class Permission extends BasePermission
-{
-    use UsesTenantConnection;
-}
+    namespace App;
+    use Hyn\Tenancy\Traits\UsesTenantConnection;
+    use Spatie\Permission\Models\Permission as BasePermission;
+    class Permission extends BasePermission
+    {
+        use UsesTenantConnection;
+    }
+```
+
+```
+<?php
+    namespace App;
+    use Hyn\Tenancy\Traits\UsesTenantConnection;
+    use Spatie\Permission\Models\Role as BaseRole;
+    class Role extends BaseRole
+    {
+        use UsesTenantConnection;
+    }
 ```
 
 
