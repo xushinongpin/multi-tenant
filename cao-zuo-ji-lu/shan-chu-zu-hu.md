@@ -40,7 +40,7 @@ class DeleteTenant extends Command
 }
 ```
 
-否在那时删除数据库或数据库用户 
+否在那时删除数据库或数据库用户
 
 ```
 php artisan vendor:publish
@@ -63,7 +63,25 @@ php artisan vendor:publish
    [14] Tag: laravel-notifications
    [15] Tag: laravel-pagination
    [16] Tag: tenancy
- 
+```
+
+config/tenancy.php 配置
+
+```
+...
+        'auto-delete-tenant-directory' => env('TENANCY_DIRECTORY_AUTO_DELETE', false),
+...
+        'auto-delete-tenant-database' => env('TENANCY_DATABASE_AUTO_DELETE', false),
+...
+        'auto-delete-tenant-database-user' => env('TENANCY_DATABASE_AUTO_DELETE_USER', false),
+```
+
+.env 配置
+
+```
+TENANCY_DIRECTORY_AUTO_DELETE=true
+TENANCY_DATABASE_AUTO_DELETE=true
+TENANCY_DATABASE_AUTO_DELETE_USER=true
 ```
 
 
