@@ -40,5 +40,31 @@ class DeleteTenant extends Command
 }
 ```
 
+否在那时删除数据库或数据库用户 
+
+```
+php artisan vendor:publish
+  选择： Provider: Hyn\Tenancy\Providers\Tenants\ConfigurationProvider 这一行的数字键
+  Which provider or tag's files would you like to publish?:
+   [0 ] Publish files from all providers and tags listed below
+   [1 ] Provider: BeyondCode\DumpServer\DumpServerServiceProvider
+   [2 ] Provider: Fideloper\Proxy\TrustedProxyServiceProvider
+   [3 ] Provider: Hyn\Tenancy\Providers\TenancyProvider
+   [4 ] Provider: Hyn\Tenancy\Providers\Tenants\ConfigurationProvider
+   [5 ] Provider: Hyn\Tenancy\Providers\WebserverProvider
+   [6 ] Provider: Illuminate\Foundation\Providers\FoundationServiceProvider
+   [7 ] Provider: Illuminate\Mail\MailServiceProvider
+   [8 ] Provider: Illuminate\Notifications\NotificationServiceProvider
+   [9 ] Provider: Illuminate\Pagination\PaginationServiceProvider
+   [10] Provider: Laravel\Tinker\TinkerServiceProvider
+   [11] Tag: config
+   [12] Tag: laravel-errors
+   [13] Tag: laravel-mail
+   [14] Tag: laravel-notifications
+   [15] Tag: laravel-pagination
+   [16] Tag: tenancy
+ 
+```
+
 
 
