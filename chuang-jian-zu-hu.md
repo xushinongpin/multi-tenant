@@ -75,7 +75,7 @@ php artisan make:model Customer
 ```
 // add a new new key in config/app.php:
     'url_base' => env('APP_URL_BASE', 'http://localhost'),
-    
+
 // modify your .env file:
     APP_URL_BASE=townhouse.dev
     APP_URL=http://${APP_URL_BASE}
