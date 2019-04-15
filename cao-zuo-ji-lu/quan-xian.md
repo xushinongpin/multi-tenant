@@ -102,5 +102,20 @@ php artisan vendor:publish
     }
 ```
 
+授予管理用户管理权限 【 app/User.php 】
+
+```
+use Hyn\Tenancy\Traits\UsesTenantConnection;
+use Spatie\Permission\Traits\HasRoles;
+
+class User extends Authenticatable
+{
+    use UsesTenantConnection;
+    use HasRoles;
+
+    // ...
+}
+```
+
 
 
