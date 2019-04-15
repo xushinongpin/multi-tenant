@@ -68,5 +68,11 @@ php artisan vendor:publish
     }
 ```
 
+设置默认角色和权限 【 config / tenancy.php 】
+
+```
+'tenant-seed-class' => false, 改为 'tenant-seed-class' => TenantDatabaseSeeder::class,
+```
+
 
 
