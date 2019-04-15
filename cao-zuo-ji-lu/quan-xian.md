@@ -74,5 +74,5 @@ php artisan vendor:publish
 'tenant-seed-class' => false, 改为 'tenant-seed-class' => TenantDatabaseSeeder::class,
 ```
 
-
+修改 TenantDatabaseSeeder 【 位置：database/seeds/TenantDatabaseSeeder.php 】
 
