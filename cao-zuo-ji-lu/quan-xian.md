@@ -28,7 +28,20 @@ php artisan vendor:publish
       [16] Tag: laravel-pagination
       [17] Tag: migrations
       [18] Tag: tenancy
-    
+```
+
+修改 config/permission.php
+
+```
+'permission' => Spatie\Permission\Models\Permission::class, 改为  'permission' => App\Permission::class,
+'role' => Spatie\Permission\Models\Role::class, 改为 'role' => App\Role::class,
+```
+
+生产model
+
+```
+php artisan make:model Permission
+php artisan make:model Role
 ```
 
 
