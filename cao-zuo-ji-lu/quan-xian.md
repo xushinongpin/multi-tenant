@@ -146,14 +146,14 @@ php artisan tenant:delete zlc
 app/Console/Commands/CreateTenant.php:56
     private function addAdmin($name, $email, $password)
     {
+        $role = Role::create(['name' => 'admin']);
+        $permission = Permission::create(['name' => 'edit articles']);
+
         $admin = User::create(['name' => $name, 'email' => $email, 'password' => Hash::make($password)]);
         $admin->guard_name = 'web';
-        $admin->assignRole('admin'); 改为 $admin->hasRole('admin');
+        $admin->assignRole('admin');
         return $admin;
     }
-
-assignRole --- Assign the given role to the model. ---  将给定角色分配给模型。
-hasRole    --- Determine if the model has (one of) the given role(s).  --- 确定模型是否具有（一个）给定角色。
 ```
 
 
