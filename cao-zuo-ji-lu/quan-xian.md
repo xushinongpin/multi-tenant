@@ -151,6 +151,9 @@ app/Console/Commands/CreateTenant.php:56
         $admin->assignRole('admin'); 改为 $admin->hasRole('admin');
         return $admin;
     }
+    
+assignRole --- Assign the given role to the model. ---  将给定角色分配给模型。
+hasRole    --- Determine if the model has (one of) the given role(s).  --- 确定模型是否具有（一个）给定角色。
 ```
 
 
