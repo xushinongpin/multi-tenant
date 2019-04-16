@@ -11,4 +11,5 @@
 * [创建租户](chuang-jian-zu-hu.md)
 * [删除租户](cao-zuo-ji-lu/shan-chu-zu-hu.md)
 * [权限](cao-zuo-ji-lu/quan-xian.md)
+* [邀请](yao-qing.md)
 
