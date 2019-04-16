@@ -139,5 +139,19 @@ php artisan tenant:create zlc zlc@lvtian.vip zlc
 php artisan tenant:delete zlc
 ```
 
+执行报错提示  Spatie\Permission\Exceptions\RoleDoesNotExist  : There is no role named \`admin\`.
+
+```
+临时解决方案
+app/Console/Commands/CreateTenant.php:56
+    private function addAdmin($name, $email, $password)
+    {
+        $admin = User::create(['name' => $name, 'email' => $email, 'password' => Hash::make($password)]);
+        $admin->guard_name = 'web';
+        $admin->assignRole('admin'); 改为 $admin->hasRole('admin');
+        return $admin;
+    }
+```
+
 
 
