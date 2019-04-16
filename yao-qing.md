@@ -112,5 +112,161 @@ Route::group(['middleware' => 'tenancy.enforce'], function () {
 ...
 ```
 
+对租户进行分类
+
+```
+php artisan make:model Tenant
+
+app/Tenant.php
+<?php
+namespace App;
+use Hyn\Tenancy\Environment;
+use Hyn\Tenancy\Models\Hostname;
+use Hyn\Tenancy\Models\Website;
+use Illuminate\Support\Facades\Hash;
+use Hyn\Tenancy\Contracts\Repositories\HostnameRepository;
+use Hyn\Tenancy\Contracts\Repositories\WebsiteRepository;
+use Illuminate\Support\Facades\Config;
+
+/**
+ * @property Website website
+ * @property Hostname hostname
+ * @property User admin
+ */
+class Tenant
+{
+    public function __construct($tenantname, User $admin = null)
+    {
+        $baseUrl = config('app.url_base');
+        $fqdn = "{$tenantname}.{$baseUrl}";
+
+        if ($this->hostname = Hostname::where('fqdn', $fqdn)->firstOrFail()) {
+            $this->website = Website::where('id', $this->hostname->website_id)->firstOrFail();
+        }
+
+        $this->admin = $admin;
+    }
+    public function delete()
+    {
+        app(HostnameRepository::class)->delete($this->hostname, true);
+        app(WebsiteRepository::class)->delete($this->website, true);
+    }
+    public static function createFrom($name, $email, $tenantname): Tenant
+    {
+        // create a website
+        $website = new Website;
+        app(WebsiteRepository::class)->create($website);
+        // associate the website with a hostname
+        $hostname = new Hostname;
+        $baseUrl = config('app.url_base');
+        $hostname->fqdn = "{$tenantname}.{$baseUrl}";
+        app(HostnameRepository::class)->attach($hostname, $website);
+        // make hostname current
+        app(Environment::class)->tenant($website);
+        $admin = static::makeAdmin($name, $email, str_random());
+
+        return new Tenant($tenantname, $admin);
+    }
+    private static function makeAdmin($name, $email, $password): User
+    {
+        $admin = User::create(['name' => $name, 'email' => $email, 'password' => Hash::make($password)]);
+        $admin->guard_name = 'web';
+        $admin->assignRole('admin');
+        return $admin;
+    }
+
+    public static function retrieveBy($tenantname): ?Tenant
+    {
+        $baseUrl = config('app.url_base');
+        $fqdn = "{$tenantname}.{$baseUrl}";
+        if (Hostname::where('fqdn', $fqdn)->exists()) {
+            return new Tenant($tenantname);
+        }
+        return null;
+    }
+}
+
+
+
+
+```
+
+```
+app/Console/Commands/CreateTenant.php
+<?php
+namespace App\Console\Commands;
+use App\User;
+use Hyn\Tenancy\Contracts\Repositories\HostnameRepository;
+use Hyn\Tenancy\Contracts\Repositories\WebsiteRepository;
+use Hyn\Tenancy\Environment;
+use Hyn\Tenancy\Models\Hostname;
+use Hyn\Tenancy\Models\Website;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use App\Notifications\TenantCreated;
+use App\Tenant;
+class CreateTenant extends Command
+{
+    protected $signature = 'tenant:create {name} {email} {tenantname}';
+    protected $description = 'Creates a tenant with the provided name and email address e.g. php artisan tenant:create boise boise@example.com';
+    public function handle()
+    {
+        $name = $this->argument('name');
+        $email = $this->argument('email');
+        $tenantname = $this->argument('tenantname');
+        if ($this->tenantExists($tenantname)) {
+            $this->error("A tenant with name '{$tenantname}' already exists.");
+            return;
+        }
+        $tenant = Tenant::createFrom($name, $email, $tenantname);
+        $this->info("Tenant '{$tenantname}' is created and is now accessible at {$tenant->hostname->fqdn}");
+        // invite admin
+        $tenant->admin->notify(new TenantCreated($tenant->hostname));
+        $this->info("Admin {$email} has been invited!");
+    }
+    private function tenantExists($tenantname)
+    {
+        $baseUrl = config('app.url_base');
+        $fqdn = "{$tenantname}.{$baseUrl}";
+        return Hostname::where('fqdn', $fqdn)->exists();
+    }
+}
+```
+
+```
+app/Console/Commands/DeleteTenant.php
+<?php
+namespace App\Console\Commands;
+use Hyn\Tenancy\Contracts\Repositories\HostnameRepository;
+use Hyn\Tenancy\Contracts\Repositories\WebsiteRepository;
+use Hyn\Tenancy\Environment;
+use Hyn\Tenancy\Models\Hostname;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Config;
+use App\Tenant;
+class DeleteTenant extends Command
+{
+    protected $signature = 'tenant:delete {tenantname}';
+    protected $description = 'Deletes a tenant of the provided name. Only available on the local environment e.g. php artisan tenant:delete boise';
+    public function handle()
+    {
+        // because this is a destructive command, we'll only allow to run this command
+        // if you are on the local or testing
+        if (!(app()->isLocal() || app()->runningUnitTests())) {
+            $this->error('This command is only avilable on the local environment.');
+            return;
+        }
+        $tenantname = $this->argument('tenantname');
+        if ($tenant = Tenant::retrieveBy($tenantname)) {
+            $tenant->delete();
+            $this->info("Tenant {$tenantname} successfully deleted.");
+        } else {
+            $this->error("Couldn't find tenant {$tenantname}");
+        }
+    }
+}
+```
+
 
 
