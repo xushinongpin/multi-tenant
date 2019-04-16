@@ -142,7 +142,7 @@ php artisan tenant:delete zlc
 执行报错提示  Spatie\Permission\Exceptions\RoleDoesNotExist  : There is no role named \`admin\`.
 
 ```
-临时解决方案
+解决方案 - 先生成 role 和 Permission 数据
 app/Console/Commands/CreateTenant.php:56
     private function addAdmin($name, $email, $password)
     {
@@ -151,7 +151,7 @@ app/Console/Commands/CreateTenant.php:56
         $admin->assignRole('admin'); 改为 $admin->hasRole('admin');
         return $admin;
     }
-    
+
 assignRole --- Assign the given role to the model. ---  将给定角色分配给模型。
 hasRole    --- Determine if the model has (one of) the given role(s).  --- 确定模型是否具有（一个）给定角色。
 ```
