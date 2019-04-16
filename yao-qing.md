@@ -36,5 +36,27 @@ class TenantCreated extends Notification
 }
 ```
 
+创建租户时通知管理员
+
+```
+app/Console/Commands/CreateTenant.php
+
+app/Console/Commands/CreateTenant.php:20
+
+...
+use App\Notifications\TenantCreated;
+
+public function handle(){
+        ...
+                // we'll create a random secure password for our to-be admin
+                $password = str_random();
+                $this->addAdmin($name, $email, $password)->notify(new TenantCreated($tenant["hostname"]));
+                $this->info("Tenant '{$tenantname}' is created and is now accessible at {$tenant["hostname"]->fqdn}");
+                // $this->info("Admin {$email} can log in using password {$password}");
+                $this->info("Admin {$email} has been invited!");
+        ...
+}
+```
+
 
 
