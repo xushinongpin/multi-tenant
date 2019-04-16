@@ -4,7 +4,7 @@
 php artisan make:notification TenantCreated
 
 app/Notifications/TenantCreated
-
+【 为了安全，此处强制使用https 】
 <?php
 namespace App\Notifications;
 use Illuminate\Notifications\Messages\MailMessage;
