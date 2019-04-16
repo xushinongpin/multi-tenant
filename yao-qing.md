@@ -185,10 +185,6 @@ class Tenant
         return null;
     }
 }
-
-
-
-
 ```
 
 ```
@@ -266,6 +262,18 @@ class DeleteTenant extends Command
         }
     }
 }
+```
+
+.env 邮箱配置可参考 [.env配置](https://laravel10.wordpress.com/2015/02/22/%E3%83%A1%E3%83%BC%E3%83%AB%E3%81%AE%E7%92%B0%E5%A2%83%E8%A8%AD%E5%AE%9A/)  与 [测试邮箱](https://mailtrap.io)
+
+```
+
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=7f1587d6342ac9
+MAIL_PASSWORD=0481a0141dac28
+MAIL_ENCRYPTION=null
 ```
 
 
