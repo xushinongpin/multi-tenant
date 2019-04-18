@@ -6,7 +6,7 @@ wampserver [实现 子域名访问](http://www.axertion.com/tutorials/2012/03/ho
 
 
 
-https 设置
+## **https 设置**
 
 ```
 cd c:\wamp64\bin\apache\apache2.4.27\bin
@@ -49,7 +49,6 @@ c:\wamp64\bin\apache\apache2.4.27\conf\extra\httpd-ssl.conf
 
 ```
 c:\wamp64\bin\apache\apache2.4.27\bin\httpd -t
-
 ```
 
 重启wampserver
