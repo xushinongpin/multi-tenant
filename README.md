@@ -4,6 +4,8 @@
 
 wampserver[实现 子域名访问](https://legacy.gitbook.com/book/xushinongpinseo/multi-tenant/edit#)
 
+[借鉴网站](https://qiita.com/hitotch/items/9e22921209eda18d326b)
+
 # 后台
 
 1. ## [php部分笔记](https://php.lvtian.vip/)
