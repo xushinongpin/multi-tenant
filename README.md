@@ -1,55 +1,38 @@
-# multi-tenant - [多租户](https://legacy.gitbook.com/book/xushinongpinseo/multi-tenant/edit)
+# multi-tenant -[多租户](https://legacy.gitbook.com/book/xushinongpinseo/multi-tenant/edit#)
 
-使用[laravel](https://laravel.com/docs/5.8) + [laravel-tenancy](https://laravel-tenancy.com/docs/hyn/5.4) 实现多租户；照猫画虎，成否在此一举
+使用[laravel](https://legacy.gitbook.com/book/xushinongpinseo/multi-tenant/edit#)+[laravel-tenancy](https://legacy.gitbook.com/book/xushinongpinseo/multi-tenant/edit#)实现多租户；照猫画虎，成否在此一举
 
-wampserver [实现 子域名访问](http://www.axertion.com/tutorials/2012/03/how-to-setup-local-subdomains-using-wampserver/)
+wampserver[实现 子域名访问](https://legacy.gitbook.com/book/xushinongpinseo/multi-tenant/edit#)
+
+# 后台
+
+1. ## [php部分笔记](https://php.lvtian.vip/)
+2. ## [tp几个坑](https://tp.lvtian.vip/)
+3. ## [**laravel初学笔记**](https://laravel.lvtian.vip)
+4. ## [learnku初学笔记](https://learnku.lvtian.vip/)
+5. ## [learnku开发实战进阶](https://learnku-2.ilvtian.vip/)
+6. ## [learnku电商实战 ](https://learnku-shop.ilvtian.vip/)
+7. ## [多租户笔记](https://multi-tenant.lvtian.vip/)
+8. ## [微信-没用](https://wechat.lvtian.vip/)
+9. ## [微擎备忘-没用](https://weiqing.lvtian.vip)
+
+# 前台
+
+1. ## [layui备忘笔记](https://layui.lvtian.vip/)
+2. ## [vue笔记](https://vue.lvtian.vip/)
+
+# 运维
+
+1. ## [centos学习](https://linux_centos.lvtian.vip/)
+2. ## [平常遇到的坑与生活笔记](https://net.lvtian.vip/)
+
+# seo
+
+1. ## [seo学习笔记](https://seo.lvtian.vip/)
+
+# Python
+
+1. ## [Python学习笔记](https://python.lvtian.vip/)
 
 
-
-## **https 设置**
-
-```
-cd c:\wamp64\bin\apache\apache2.4.27\bin
-openssl genrsa -aes256 -out private.key 2048
-openssl rsa -in private.key -out private.key
-openssl req -new -x509 -nodes -sha1 -key private.key -out certificate.crt -days 36500
-c:\wamp64\bin\apache\apache2.4.27\conf\openssl.cnf
-```
-
-迁移位置
-
-```
-private.key 和certificate.crt 移动到 c:\wamp64\bin\apache\apache2.4.27\conf\key\目录下
-```
-
-修改 httpd.conf
-
-```
-c:\wamp64\bin\apache\apache2.4.27\conf\httpd.conf
-    LoadModule ssl_module modules/mod_ssl.so
-    Include conf/extra/httpd-ssl.conf
-    LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
-```
-
-修改  httpd-ssl.conf
-
-```
-c:\wamp64\bin\apache\apache2.4.27\conf\extra\httpd-ssl.conf
-    DocumentRoot "${INSTALL_DIR}/www/multi-tenant-demo/public/"
-    ServerName psc.app:443
-    ServerAdmin admin@example.com
-    SSLSessionCache "shmcb:c:/wamp64/bin/apache/apache2.4.27/logs/ssl_scache(512000)"
-    ErrorLog "c:/wamp64/bin/apache/apache2.4.27/logs/error.log"
-    TransferLog "c:/wamp64/bin/apache/apache2.4.27/logs/access.log"
-    SSLCertificateFile "c:/wamp64/bin/apache/apache2.4.27/conf/key/certificate.crt"
-    SSLCertificateKeyFile "c:/wamp64/bin/apache/apache2.4.27/conf/key/private.key"
-```
-
-检测
-
-```
-c:\wamp64\bin\apache\apache2.4.27\bin\httpd -t
-```
-
-重启wampserver
 
